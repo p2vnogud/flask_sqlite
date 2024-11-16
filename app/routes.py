@@ -14,28 +14,10 @@ from middlewares.file_upload import handle_file_upload
 
 
 
-
-
 # Settings the utils
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 print(curr_dir)
 
-#def is_valid_random_string(random_string):
-#    # Check if the random string matches the expected format (you can adjust this based on your requirements)
-#    return len(random_string) == 32 and all(c in '0123456789abcdef' for c in random_string)
-
-#def generate_randString(length):
-#    characters = string.ascii_letters + string.digits
-#    return ''.join(random.choice(characters) for _ in range(length))
-
-
-
-
-# Checks file extension
-#ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-#def allowed_file(filename):
-#    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-# ConnectDB
 def getDB():
     conn = sqlite3.connect(os.path.join(curr_dir, "openu.db"))
     cursor = conn.cursor()
@@ -208,8 +190,6 @@ def home():
 
 
 
-
-
 # Profile route -----------------------------------------------
 @app.route('/profile')
 @check_session
@@ -261,8 +241,6 @@ def profile():
 
         return render_template('profile.html', username=username, blog_info=blog_info,profile_pic=profile_pic,  published_blogs=published_blogs,blog_count=blog_count, liked_blogs=total_blog)
     return redirect('/login')
-
-
 
 
 
@@ -331,32 +309,6 @@ def settings():
         result = handle_file_upload(request, user_upload_folder, id, name, username, emailAddr, profile_pic)
         if result:
             return result 
-
-        # Check if the user upload a requests with a profile pic
-        #if 'file' not in request.files:
-        #    flash('No file part')
-        #    return redirect(request.url)
-        #file = request.files['file']
-        #if file.filename == '':
-        #    flash('No selected file')
-        #    return redirect(request.url)
-#
-        #if file and allowed_file(file.filename):
-        #    # Save the uploaded file
-        #    filename = secure_filename('avatar.jpg')
-        #    file_path = os.path.join(user_upload_folder, filename)
-        #    file.save(file_path)
-        #    profile_pic = id + '/' + filename
-        #    print(profile_pic)
-#
-        #    flash('File uploaded successfully')
-        #    return render_template('settings.html', name=name, username=username, email=emailAddr, profile_pic=profile_pic)  # Redirect to the settings page
-        #
-        #else:
-        #    flash('Invalid file format.')
-        #    return redirect(request.url)
-
-
         
 
     avatar_path = os.path.join(app.config['UPLOAD_FOLDER'], id)
@@ -596,10 +548,6 @@ def new_chat():
     
     
     
-    
-    
-    
-    
 @app.route('/deletenoti', methods=["POST"])
 @check_session
 def deletenoti():
@@ -801,10 +749,6 @@ def allChat():
     
 
 
-
-
-
-
 # Route to update the likes
 @app.route('/updateLike', methods=["POST"])
 @check_session
@@ -926,11 +870,6 @@ def viewProfile(user_id):
     except Exception as error:
         print(f"ERROR: {error}", flush=True)
         return jsonify({"error": "Internal Server Error"}), 500
-
-
-
-
-
 
 
 
